@@ -1,10 +1,58 @@
-# easy-git
+<a id="readme-top"></a>
 
-> 让 AI Agent 替你搞定 Git，你只管说人话。
+<!-- PROJECT SHIELDS -->
+[![Stars][stars-shield]][stars-url]
+[![Forks][forks-shield]][forks-url]
+[![Issues][issues-shield]][issues-url]
+[![License][license-shield]][license-url]
 
-> **Status**：立项中（2026-05）／ PRD 已稳定 ／ SKILL.md 与 references 实现中 ／ 还不能直接安装。进展见 [`docs/prd.md`](docs/prd.md)。
+<!-- PROJECT LOGO -->
+<div align="center">
+  <h3 align="center">easy-git</h3>
+  <p align="center">
+    让 AI Agent 替你搞定 Git，你只管说人话。
+    <br />
+    <a href="docs/prd.md"><strong>查看完整 PRD »</strong></a>
+    <br /><br />
+    <a href="https://github.com/xz1220/easy-git/issues">报告 Bug</a>
+    ·
+    <a href="https://github.com/xz1220/easy-git/issues">提需求</a>
+  </p>
+</div>
 
-## 你是不是也这样
+> **Status**：立项中（2026-05）／ PRD 已稳定 ／ SKILL.md 与 references 实现中 ／ 还不能直接安装。
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>目录</summary>
+  <ol>
+    <li>
+      <a href="#关于本项目">关于本项目</a>
+      <ul>
+        <li><a href="#你是不是也这样">你是不是也这样</a></li>
+        <li><a href="#核心能力">核心能力</a></li>
+        <li><a href="#基于">基于</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#上手">上手</a>
+      <ul>
+        <li><a href="#前置条件">前置条件</a></li>
+        <li><a href="#安装">安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#怎么用">怎么用</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#贡献">贡献</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#联系">联系</a></li>
+    <li><a href="#致谢">致谢</a></li>
+  </ol>
+</details>
+
+## 关于本项目
+
+### 你是不是也这样
 
 跟 AI Agent 一起干活的时候，两件最痛的事：
 
@@ -13,7 +61,51 @@
 
 easy-git 就是给这两个痛点设计的 —— AI Agent 在跟你对话的任何时机自己判断该不该保存进度、该不该开分支、该不该拦危险动作，**你只管干活，Git 这一层对你彻底透明**。
 
-## 实际用起来是什么样
+### 核心能力
+
+- **自动 commit + push**：一段工作完成时自动保存进度、同步到远端，按语义拆成多个原子 commit，写标准 commit message（Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)）
+- **`.gitignore` 自动管理**：依赖目录（`node_modules/` / `.venv/` …）、构建产物（`dist/` …）、密钥（`.env` / `*.pem` …）、IDE 配置（`.vscode/` / `.DS_Store` …）默认拦掉，不让脏文件跟代码一起 commit
+- **Worktree 管理**：跟 Agent 说「加个新功能 …」时自动开 worktree + 新分支；做完问你 (a) 直接合并清理 / (b) 提 PR review / (c) 暂时保留 三选一
+- **人话翻译层**：用户面看不到 commit / push / rebase 这种术语，只有「保存了一段进度」「同步到 GitHub」「另起一条线做」之类的人话
+- **安全护栏**：force push 到 main / reset --hard / commit 密钥 / 用 `-A` 一把梭 等危险动作永不主动做，全部拦下来问你
+
+### 基于
+
+* [Agent Skills 开放标准](https://agentskills.io/specification)
+* [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
+* [Git](https://git-scm.com/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 上手
+
+### 前置条件
+
+* 本地装好 Git（[git-scm.com](https://git-scm.com/downloads)）
+* 一个支持 [Agent Skills 开放标准](https://agentskills.io/specification) 的 AI Agent（已知支持的有 32+ 个）：
+
+  Claude Code · Codex CLI · Cursor · GitHub Copilot · Gemini CLI · Junie · Goose · Amp · TRAE · ……
+
+  跟 MCP 没关系，是另一套更广的开放标准 —— **装一次，所有兼容 Agent 都能用**。
+
+### 安装
+
+**Claude Code**：
+
+```bash
+/plugin marketplace add xz1220/easy-git
+/plugin install easy-git
+```
+
+**其他兼容 Agent**：按各自的 skill 安装机制，详见 [PRD 安装章节](docs/prd.md#安装)。
+
+装完之后什么都不用做，AI Agent 会自己在合适时机调用。
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 怎么用
+
+下面是两个典型场景，对比有没有 easy-git 时的体验差。
 
 ### 场景一：Agent 改坏了，你想回到上一个完好的版本
 
@@ -58,49 +150,91 @@ Agent：这个改动比较大，我另起一条线 feat-user-login 做，
        做完之后我会问你怎么合回去。
 ```
 
-## 核心能力
-
-- **自动 commit + push**：一段工作完成时自动保存进度、同步到远端，按语义拆成多个原子 commit，写标准 commit message（Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)）
-- **`.gitignore` 自动管理**：依赖目录（`node_modules/` / `.venv/` …）、构建产物（`dist/` …）、密钥（`.env` / `*.pem` …）、IDE 配置（`.vscode/` / `.DS_Store` …）默认拦掉，不让脏文件跟代码一起 commit
-- **Worktree 管理**：跟 Agent 说「加个新功能 …」时自动开 worktree + 新分支；做完问你 (a) 直接合并清理 / (b) 提 PR review / (c) 暂时保留 三选一
-- **人话翻译层**：用户面看不到 commit / push / rebase 这种术语，只有「保存了一段进度」「同步到 GitHub」「另起一条线做」之类的人话
-- **安全护栏**：force push 到 main / reset --hard / commit 密钥 / 用 `-A` 一把梭 等危险动作永不主动做，全部拦下来问你
-
-## 谁可以用
+### 谁可以用
 
 - 写代码的开发者
 - 写文档 / PRD / 笔记 / 博客的产品 / 运营 / 研究者
 - 用 Agent 做创作的（写作、设计稿）
 - **任何一个用 Agent 干活、想要版本管理兜底但不想被 Git 绊住的人**
 
-## 在哪能用
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-easy-git 符合 [Agent Skills 开放标准](https://agentskills.io/specification)，**装一次，32+ 个 AI Agent 工具都能用**：
+## Roadmap
 
-Claude Code · Codex CLI · Cursor · GitHub Copilot · Gemini CLI · Junie · Goose · Amp · TRAE · …
+- [x] PRD v4 稳定（按 Agent Skills 开放标准定位）
+- [x] User Story 风格 README
+- [ ] 写 `SKILL.md`（按 Agent Skills 规范，含 frontmatter + 主体）
+- [ ] `references/translation.md`（翻译词表，按 [`giteveryday`](https://git-scm.com/docs/giteveryday) 全量梳理）
+- [ ] `references/commit-style.md`（Conventional Commits 规范 + 公开范例库）
+- [ ] `references/worktree-flow.md`（worktree 生命周期 + 命名规则）
+- [ ] `references/hook-recovery.md`（pre-commit hook 失败恢复流程）
+- [ ] 测试 fixture（空 sandbox 仓库 + dry-run 命令集）
+- [ ] 详细分析 [netresearch/git-workflow-skill](https://github.com/netresearch/git-workflow-skill) 等同类 skill，确认差异化
+- [ ] v0 发布到 Agent Skills marketplace
 
-跟 MCP 没关系，是另一套更广的开放标准。
+详见 [PRD](docs/prd.md) 的「PRD 之后要做的事」章节。
 
-## 安装（实现完成后）
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-**Claude Code**：
+## 贡献
 
-```bash
-/plugin marketplace add xz1220/easy-git
-/plugin install easy-git
-```
+欢迎 issue 和 PR。
 
-**其他 Agent**：按各自的 skill 安装机制，详见 [PRD 安装章节](docs/prd.md#安装)。
+1. Fork 本项目
+2. 起 feature 分支（`git checkout -b feature/your-feature`）
+3. 写改动 + commit
+4. Push 到你的分支（`git push origin feature/your-feature`）
+5. 提 PR
 
-装完之后什么都不用做。下次让 Agent 干活的时候，Git 这一层会自动处理。
-
-## 想多了解
-
-- [完整 PRD（需求与设计）](docs/prd.md)
-- [Agent Skills 开放标准](https://agentskills.io/specification)
-- [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) —— easy-git 默认的 commit message 风格
-- 同类参考：[netresearch/git-workflow-skill](https://github.com/netresearch/git-workflow-skill) · [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## License
 
-MIT
+Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 联系
+
+xz1220 — [@xz1220 on GitHub](https://github.com/xz1220)
+
+项目仓库：[https://github.com/xz1220/easy-git](https://github.com/xz1220/easy-git)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 致谢
+
+**标准与规范**：
+
+* [Agent Skills 开放标准（agentskills.io）](https://agentskills.io/specification)
+* [anthropics/skills（官方仓库）](https://github.com/anthropics/skills)
+* [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
+
+**Git 官方文档**：
+
+* [Git Everyday](https://git-scm.com/docs/giteveryday) —— 常用命令参考（翻译词表来源）
+* [Pro Git Book](https://git-scm.com/book/en/v2)
+* [git-worktree(1)](https://git-scm.com/docs/git-worktree)
+
+**同类 skill（参考实现）**：
+
+* [netresearch/git-workflow-skill](https://github.com/netresearch/git-workflow-skill)
+* [huggingface/upskill](https://github.com/huggingface/upskill)
+* [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
+* [davila7/claude-code-templates](https://github.com/davila7/claude-code-templates)
+
+**模板**：
+
+* [Best-README-Template by othneildrew](https://github.com/othneildrew/Best-README-Template)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[stars-shield]: https://img.shields.io/github/stars/xz1220/easy-git.svg?style=for-the-badge
+[stars-url]: https://github.com/xz1220/easy-git/stargazers
+[forks-shield]: https://img.shields.io/github/forks/xz1220/easy-git.svg?style=for-the-badge
+[forks-url]: https://github.com/xz1220/easy-git/network/members
+[issues-shield]: https://img.shields.io/github/issues/xz1220/easy-git.svg?style=for-the-badge
+[issues-url]: https://github.com/xz1220/easy-git/issues
+[license-shield]: https://img.shields.io/github/license/xz1220/easy-git.svg?style=for-the-badge
+[license-url]: https://github.com/xz1220/easy-git/blob/main/LICENSE
