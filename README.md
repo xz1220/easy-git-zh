@@ -34,11 +34,11 @@ easy-git-zh 在你和 Git 之间架一层 —— 你只管说明需求，Git 自
 
 ## 快速开始
 
-### 方式一：复制这段 prompt 给你的 Agent（推荐）
+### 方式一：让 Agent 自动安装（推荐）
 
-打开你正在用的 AI Agent，把下面这段话发给它，让它自动判断当前环境并安装：
+打开你正在用的 AI Agent，把下面这段话发给它：
 
-> 安装 easy-git-zh：这是一个 Agent Skills 标准 skill。请先判断你当前运行在哪个 Agent 里，然后把 `https://github.com/xz1220/easy-git-zh` 安装到对应的本地 skills 目录。Claude Code 优先使用 `/plugin marketplace add xz1220/easy-git-zh` 和 `/plugin install easy-git-zh`；Codex CLI 使用 `~/.codex/skills/easy-git-zh`；其他支持 Agent Skills 的工具使用各自的 skills 目录。安装后请验证 `SKILL.md` 能被读取，并提醒我重启或新开会话让 skill 生效。
+> 安装 easy-git-zh：请把 `https://github.com/xz1220/easy-git-zh` 安装到当前 Agent 的 skills 目录。Claude Code 用 Marketplace；Codex CLI 用 `~/.codex/skills/easy-git-zh`。装完验证 `SKILL.md` 可读取，并提醒我重启或新开会话。
 
 装完之后不用额外配置。AI Agent 会在合适时机自动调用 easy-git-zh。
 
