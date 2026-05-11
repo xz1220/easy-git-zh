@@ -34,37 +34,60 @@ easy-git-zh 在你和 Git 之间架一层 —— 你只管说明需求，Git 自
 
 ## 快速开始
 
-按你使用的 Agent 入口，选一种安装方式：
+### 方式一：复制这段 prompt 给你的 Agent（推荐）
 
-### Claude Code
+打开你正在用的 AI Agent，把下面这段话发给它，让它自动判断当前环境并安装：
+
+> 安装 easy-git-zh：这是一个 Agent Skills 标准 skill。请先判断你当前运行在哪个 Agent 里，然后把 `https://github.com/xz1220/easy-git-zh` 安装到对应的本地 skills 目录。Claude Code 优先使用 `/plugin marketplace add xz1220/easy-git-zh` 和 `/plugin install easy-git-zh`；Codex CLI 使用 `~/.codex/skills/easy-git-zh`；其他支持 Agent Skills 的工具使用各自的 skills 目录。安装后请验证 `SKILL.md` 能被读取，并提醒我重启或新开会话让 skill 生效。
+
+装完之后不用额外配置。AI Agent 会在合适时机自动调用 easy-git-zh。
+
+### 方式二：Claude Code Marketplace
+
+在 Claude Code 里运行：
 
 ```bash
 /plugin marketplace add xz1220/easy-git-zh
 /plugin install easy-git-zh
 ```
 
-### 本地 Skill 目录
+### 方式三：手动安装到各 Agent 的 skills 目录
 
-适合 Codex、Cursor、Gemini CLI、Goose、Amp、TRAE 等支持 Agent Skills 的工具。把仓库放进对应工具的 skills 目录即可：
+如果你想手动安装，把这个仓库 clone 到对应工具的 skills 目录：
 
 ```bash
-git clone https://github.com/xz1220/easy-git-zh.git <your-agent-skills-dir>/easy-git-zh
+git clone --single-branch --depth 1 https://github.com/xz1220/easy-git-zh.git <skills-dir>/easy-git-zh
 ```
 
-### npx 安装器
+常见目录：
 
-如果你的环境使用第三方 skills 安装器：
+| Agent | 安装目录 |
+|-------|----------|
+| Codex CLI | `~/.codex/skills/easy-git-zh` |
+| Claude Code | `~/.claude/skills/easy-git-zh` |
+| Cursor | `~/.cursor/skills/easy-git-zh` |
+| OpenCode | `~/.config/opencode/skills/easy-git-zh` |
+| Gemini CLI / Goose / Amp / TRAE | 使用该工具配置的 Agent Skills 目录 |
+
+例如 Codex CLI：
+
+```bash
+git clone --single-branch --depth 1 https://github.com/xz1220/easy-git-zh.git ~/.codex/skills/easy-git-zh
+```
+
+例如 Claude Code 本地目录安装（Marketplace 不可用时）：
+
+```bash
+git clone --single-branch --depth 1 https://github.com/xz1220/easy-git-zh.git ~/.claude/skills/easy-git-zh
+```
+
+如果你的环境使用第三方 skills 安装器，也可以：
 
 ```bash
 npx skills install xz1220/easy-git-zh
 ```
 
-### Claude.ai / Claude API
-
-- Claude.ai：在 Skills 界面上传或注册这个 skill。
-- Claude API：按 Skills API 的注册流程接入 `SKILL.md`。
-
-装完之后不用额外配置。AI Agent 会在合适时机自动调用 easy-git-zh。
+Claude.ai / Claude API 用户按各自 Skills 界面或 API 注册流程接入 `SKILL.md`。
 
 ## 实际用起来是什么样
 
