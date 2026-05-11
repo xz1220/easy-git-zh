@@ -32,7 +32,7 @@ easy-git 在用户与 Git 之间架一层 —— 用户跟 Agent 说人话，Age
 ### 主要功能（一句话版）
 
 1. **自动 commit + push** —— 一段工作完成时自动保存进度、同步到远端，原子化拆分
-2. **`.gitignore` 自动管理** —— 维护忽略列表，常见不该提交的文件（依赖目录、构建产物、密钥）默认拦掉
+2. **仓库初始化与 `.gitignore` 自动管理** —— 非 git 目录主动 `git init`；维护忽略列表，常见不该提交的文件（依赖目录、构建产物、密钥）默认拦掉
 3. **Commit message 标准化** —— Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) 公开规范，不让用户操心格式
 4. **Worktree 管理**（复杂项目）—— 新 feature 自动开 worktree + 新分支；做完问用户怎么合并
 5. **人话翻译层** —— 用户面不出现任何 Git 术语
@@ -71,7 +71,7 @@ easy-git 是符合 [Agent Skills 开放标准](https://agentskills.io/specificat
 
 ## 3. 模块和具体能力
 
-### M1: 自动 commit + push
+### 自动 commit + push
 
 **触发**：Agent 在对话过程中自己判断「这是一个值得保存的节点」。判断信号：一段任务完成 / 测试通过 / 文档写完 / 即将切换到另一类工作 / 用户在表达「这段做完了」。
 
@@ -87,19 +87,23 @@ docs: update README with new endpoint and example payload
 
 **Push 同步**：solo / 个人项目场景默认 commit + push 配对（[现代 solo / trunk-based 共识](https://trunkbaseddevelopment.com/)）。受保护分支 / 与远端 diverge / 会触发 force push 的情况除外，先告知用户。
 
-### M2: `.gitignore` 自动管理
+### 仓库初始化与 `.gitignore` 自动管理
 
-新仓库 / 缺失 `.gitignore` 的仓库自动建一份，包含语言无关的常见忽略类别：
+**自动 `git init`**：Agent 要保存进度时检测到当前目录不是 git 仓库（`git rev-parse --git-dir` 失败）→ 主动初始化。流程：路径安全检查 → 告知用户 → `git init -b main` → 创建默认 `.gitignore` → 按文件名 stage → 第一笔 `chore: init repository`。**不主动配 remote**，等用户说"推到 GitHub"再问。
+
+**危险位置先问用户**：`$HOME` 根、`/tmp` / mktemp、`/`、`~/Desktop` / `~/Documents` / `~/Downloads`、已在另一个 git 仓库子目录中 → 先确认再 init。
+
+**`.gitignore` 自动建立**：新仓库 / 缺失 `.gitignore` 的仓库自动建一份，包含语言无关的常见忽略类别：
 
 - **依赖目录**：`node_modules/`、`vendor/`、`.venv/`、`__pycache__/`、`target/` 等
 - **构建产物**：`dist/`、`build/`、`.next/`、`out/`、`*.pyc`、`*.class`
-- **环境与密钥**：`.env`、`.env.*`、`*.pem`、`*.key`、`credentials.json`
+- **环境与密钥**：`.env`、`.env.*`（含 `!.env.example` / `!.env.sample` 例外）、`*.pem`、`*.key`、`credentials.json`
 - **IDE / 编辑器**：`.vscode/`、`.idea/`、`.DS_Store`、`*.swp`
 - **日志与临时文件**：`*.log`、`*.tmp`、`*.cache`
 
 Agent 在 commit 前发现要提交的文件命中以上类别 → 自动加进 `.gitignore` 并告诉用户 "我让 Git 忽略这些文件，它们不该跟代码一起保存"。
 
-### M3: Commit message 规范
+### Commit message 规范
 
 完全 follow **[Conventional Commits 1.0.0 规范](https://www.conventionalcommits.org/en/v1.0.0/)**，不引入用户特定风格：
 
@@ -121,7 +125,7 @@ Subject 规则（业界标准）：
 
 **AI 归属**：commit body 末尾自动加 `Co-Authored-By:` trailer 标识 Agent 参与（[行业共识](https://www.deployhq.com/git/committing-ai-generated-code)，机器可读 + 不挤 subject）。具体身份由当前 harness 决定，skill 本身不内嵌固定模板。
 
-### M4: Worktree 管理（复杂项目）
+### Worktree 管理（复杂项目）
 
 适用场景：项目体量已经大到「在 main 上随便改可能搞坏正在跑的东西」，且用户在请求新 feature。
 
@@ -147,7 +151,7 @@ Subject 规则（业界标准）：
 - (b) 提 PR 让用户 review 再合（远端是 GitHub 时可用）
 - (c) 暂时保留 worktree
 
-### M5: 人话翻译层
+### 人话翻译层
 
 Agent 跟用户讲的话**完全不出现 Git 术语**。翻译词表来源 = [Git 官方 `giteveryday`](https://git-scm.com/docs/giteveryday) 的常用命令 + 业界公认的用户友好表述。完整词表在 `references/translation.md`，主要条目：
 
@@ -169,7 +173,7 @@ Agent 跟用户讲的话**完全不出现 Git 术语**。翻译词表来源 = [G
 - ✅ "我把 PRD 那段保存了并同步到了 GitHub。"
 - ❌ "我执行了 `git add docs/prd.md && git commit -m '...' && git push`。"
 
-### M6: 安全护栏
+### 安全护栏
 
 下列操作 skill **永不主动做**，触发条件命中时必须先问用户：
 

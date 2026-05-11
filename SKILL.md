@@ -25,9 +25,9 @@ description: Handles Git operations in plain language so the user never has to l
 4. **保存点要勤、要原子** — 每完成一段工作就保存一笔，按语义拆 commit，不堆大杂烩。
 5. **不确定就问** — worktree 完成后合不合并、像密钥的文件要不要提交、检测到陌生本地状态 → 全部问用户。
 
-## 六大模块
+## 核心能力
 
-### M1 — 自动保存进度（commit + push）
+### 自动 commit + push
 
 **何时触发**（你自己判断）：
 
@@ -64,11 +64,44 @@ docs: update README with new endpoint and example payload
 
 Commit message 完整规范见 `references/commit-style.md`。
 
-### M2 — `.gitignore` 自动管理
+### 仓库初始化与 .gitignore 自动管理
+
+#### 自动 `git init`
 
 **触发条件**：
 
-- 仓库还没有 `.gitignore` → 自动创建一份基础版
+- Agent 想保存进度（按"自动 commit + push"流程）时，`git rev-parse --git-dir` 失败 → 当前目录不是 git 仓库 → 自动初始化
+- 用户在一个明显是项目目录的位置（含 `README` / `package.json` / `pyproject.toml` / `Cargo.toml` / `go.mod` / `requirements.txt` 等）开始干活 → 第一次有可保存内容时主动初始化
+
+**自动初始化流程**：
+
+1. 路径检查（见下方"危险位置"清单），命中 → 先问用户
+2. 告知用户："这个目录还没交给 Git 管，我先初始化一下，之后随时能回到当前状态。"
+3. `git init -b main`（默认主分支用 `main`）
+4. 创建默认 `.gitignore`（见下文模板）
+5. 按文件名 stage 该保存的文件（**不用** `git add -A`）
+6. 第一笔 commit：`chore: init repository` + Co-Authored-By trailer
+7. **不主动配 remote**：等用户说"推到 GitHub" / "建个仓库"时再问 URL，或用 `gh repo create` 引导
+
+**危险位置（先问用户再 init）**：
+
+| 位置 | 原因 |
+|---|---|
+| `$HOME` 根目录 | 会把整个 home 纳管，影响巨大 |
+| `/tmp` / `/var/tmp` / `mktemp` 路径 | 通常是临时文件，init 没意义 |
+| `/` 或任何系统目录 | 灾难性 |
+| `~/Desktop` / `~/Documents` / `~/Downloads` | 不像项目目录，可能误判 |
+| 已经在另一个 git 仓库的子目录（含 worktree） | `git rev-parse --show-toplevel` 返回别的路径 → 提示用户：是想在父仓库里干活，还是要建独立子仓？ |
+
+命中以上 → 用户面话术：
+
+> "你让我做的事看起来需要版本管理，但当前位置是 `<path>`，看起来不像项目目录。确认要在这里建仓库吗？还是想我切到别的地方？"
+
+#### `.gitignore` 自动管理
+
+**触发条件**：
+
+- 仓库还没有 `.gitignore` → 自动创建一份基础版（init 时已建则跳过）
 - commit 前发现待提交文件命中常见忽略类别 → 加进 `.gitignore` 后再提交
 - 用户的新目录里出现明显的脏文件（`node_modules/`、`dist/` 等）→ 提前加进忽略
 
@@ -128,7 +161,7 @@ credentials.json
 - ✅ "我让 Git 忽略 `dist/` 这个目录，它是构建产物，不该跟代码一起保存。"
 - ❌ "已将 `dist/` 加入 `.gitignore`。"
 
-### M3 — Commit message 标准化（Conventional Commits）
+### Commit message 标准化（Conventional Commits）
 
 完全 follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)，不引入用户特定风格。
 
@@ -172,7 +205,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 详细范例 + 反例见 `references/commit-style.md`。
 
-### M4 — Worktree 管理（复杂项目）
+### Worktree 管理（复杂项目）
 
 **何时开 worktree**（启发式，识别错了用户能纠正）：
 
@@ -209,7 +242,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 完整生命周期与命名细则见 `references/worktree-flow.md`。
 
-### M5 — 人话翻译层
+### 人话翻译层
 
 跟用户讲的话**完全不出现 Git 术语**。用人话表述。
 
@@ -241,7 +274,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - 用户主动用 Git 术语问（"现在在哪个分支？"）→ 可以用术语回答（"在 main 分支"），但优先用人话
 - 错误信息从 git 输出原样冒出来 → 翻译成人话再展示（"远端有新东西，得先拉一下"，而不是 "non-fast-forward"）
 
-### M6 — 安全护栏
+### 安全护栏
 
 下列操作 skill **永不主动做**。命中条件即必须先问用户，得到明确同意才执行。
 
@@ -325,33 +358,34 @@ skill 主动碰这些就出事，所以直接不做，让用户自己决定：
 ### 用户说"帮我写一段 ……"
 
 1. 写完
-2. 判断要不要保存（M1 触发条件）
-3. 检查待提交文件有没有触发 M2（.gitignore）/ M6（secrets / 大文件）
-4. 写好 commit message（M3）
-5. commit + push
-6. 用人话报告（M5）
+2. 当前不是 git 仓库？ → 按"仓库初始化"流程先 init
+3. 判断要不要保存（见"自动 commit + push"触发条件）
+4. 检查待提交文件有没有触发"仓库初始化与 .gitignore"或"安全护栏"
+5. 写好 commit message（见"Commit message 标准化"）
+6. commit + push
+7. 用人话报告（见"人话翻译层"）
 
 ### 用户说"加一个新功能 ……"
 
-1. 判断要不要开 worktree（M4 启发式）
+1. 判断要不要开 worktree（见"Worktree 管理"启发式）
 2. 开了的话：创建 worktree → 提醒环境初始化 → 切目录开干
 3. 干完后保存进度（同上流程）
 4. 主动问用户合并三选一
 
 ### 用户说"这个改回去"
 
-1. **不要用** `reset --hard` 或 `checkout -- .`（M6）
+1. **不要用** `reset --hard` 或 `checkout -- .`（见"安全护栏"）
 2. 优先 `git revert <last-commit>` 生成反向 commit
 3. 或者先 `git stash` 暂存当前修改
 4. 用人话告诉用户："我把刚才那段撤掉了，回到上一个保存点"
 
 ### 用户说"同步一下" / "保存一下" / "推上去"
 
-直接按 M1 流程：保存 + 推送 + 用人话报告。
+直接按"自动 commit + push"流程：保存 + 推送 + 用人话报告。
 
 ### Hook 失败了
 
-1. **不要** `--no-verify`（M6）
+1. **不要** `--no-verify`（见"安全护栏"）
 2. 读 hook 输出，定位问题
 3. 修问题（lint / format / type check 错误）
 4. 重新 stage 修复后的文件

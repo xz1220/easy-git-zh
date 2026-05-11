@@ -41,7 +41,7 @@
 
 | Git 操作 | 用户面话术 | 备注 |
 |---|---|---|
-| `git worktree add ../xxx <branch>` | "另起一条线 `<branch>` 在 `<path>` 单独做" | M4 触发时 |
+| `git worktree add ../xxx <branch>` | "另起一条线 `<branch>` 在 `<path>` 单独做" | "Worktree 管理"触发时 |
 | `git worktree list` | "看看现在并行开了几条线" | |
 | `git worktree remove ../xxx` | "把 `xxx` 这条线收掉了" | 合并清理后 |
 | 主仓 + worktree 概念 | "主仓在 …… ，这条新线在 ……" | 不用 worktree 这个词 |
@@ -77,8 +77,8 @@
 |---|---|---|
 | `git revert <commit>` | "把刚才那笔撤回去（用一笔反向修改）" | **优先用这个**，不破坏历史 |
 | `git reset --soft HEAD~1` | "把上一笔保存退回成未保存状态" | 仅当 commit 没 push |
-| `git reset --hard` | （永不主动） | M6 拦截 |
-| `git checkout -- file` | （永不主动） | M6 拦截，会丢未存的修改 |
+| `git reset --hard` | （永不主动） | "安全护栏"拦截 |
+| `git checkout -- file` | （永不主动） | "安全护栏"拦截，会丢未存的修改 |
 | `git restore file` | （永不主动） | 同上 |
 | `git stash` | "先把当前修改放一边" | 临时收起未保存内容 |
 | `git stash pop` | "把刚才放一边的修改拿回来" | |
