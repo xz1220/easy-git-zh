@@ -1,0 +1,19 @@
+{
+  "name": "easy-git",
+  "owner": {
+    "name": "xz1220"
+  },
+  "metadata": {
+    "description": "Git complexity abstracted away for AI Agent users — install once, works across 32+ Agent tools."
+  },
+  "plugins": [
+    {
+      "name": "easy-git",
+      "source": {
+        "source": "github",
+        "repo": "xz1220/easy-git"
+      },
+      "description": "Auto-commits and pushes save points as work completes, manages .gitignore, opens worktrees for new features, translates Git output into plain language, and blocks dangerous operations."
+    }
+  ]
+}
