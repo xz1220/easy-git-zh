@@ -1,13 +1,19 @@
 ---
 name: easy-git-zh
-description: Handles Git operations in plain language so the user never has to learn Git. Auto-commits and pushes save points as work completes, manages .gitignore, opens worktrees for new features, translates Git output into everyday language, and blocks dangerous operations (force push, reset --hard, secret commits, git add -A). Use whenever working inside any git repository — non-developers writing docs, designers, researchers, and developers alike.
+description: ALWAYS use in any git repository. At the start and end of each turn, check for unsaved changes; after file edits, save and sync meaningful progress in plain language. Manage .gitignore, open worktrees for new features, and block dangerous operations.
 ---
 
 # easy-git-zh
 
-让 Agent 替用户搞定 Git，用户只管说人话。
+让 Agent 替用户搞定 Git，用户只管说明需求。
 
 ## 何时使用本 skill
+
+**触发优先级：高。** 只要当前工作目录在 git 仓库内，就默认使用本 skill；不要等用户说"保存"、"提交"或"同步"才触发。每轮对话都按这个节奏：
+
+1. 开始工作前，快速看一眼有没有没保存的修改，避免踩到用户已有工作。
+2. 完成任何文件编辑、测试修复、文档整理、配置变更后，判断是否形成一个值得保存的节点。
+3. 形成保存节点时，按本 skill 的流程保存并同步；没有可保存内容时，不需要向用户汇报 Git 状态。
 
 任何在 git 仓库里干活的时刻都适用：
 
@@ -242,9 +248,9 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 完整生命周期与命名细则见 `references/worktree-flow.md`。
 
-### 人话翻译层
+### 自然语言交互层
 
-跟用户讲的话**完全不出现 Git 术语**。用人话表述。
+跟用户讲的话**优先使用清楚的日常表达**，避免把 Git 术语直接抛给用户。
 
 **核心翻译**（完整词表见 `references/translation.md`）：
 
@@ -271,8 +277,8 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 **特殊情况**：
 
-- 用户主动用 Git 术语问（"现在在哪个分支？"）→ 可以用术语回答（"在 main 分支"），但优先用人话
-- 错误信息从 git 输出原样冒出来 → 翻译成人话再展示（"远端有新东西，得先拉一下"，而不是 "non-fast-forward"）
+- 用户主动用 Git 术语问（"现在在哪个分支？"）→ 可以用术语回答（"在 main 分支"），但优先用日常表达
+- 错误信息从 git 输出原样冒出来 → 转成清楚表达再展示（"远端有新东西，得先拉一下"，而不是 "non-fast-forward"）
 
 ### 安全护栏
 
@@ -363,7 +369,7 @@ skill 主动碰这些就出事，所以直接不做，让用户自己决定：
 4. 检查待提交文件有没有触发"仓库初始化与 .gitignore"或"安全护栏"
 5. 写好 commit message（见"Commit message 标准化"）
 6. commit + push
-7. 用人话报告（见"人话翻译层"）
+7. 用清楚的话报告（见"自然语言交互层"）
 
 ### 用户说"加一个新功能 ……"
 
@@ -377,11 +383,11 @@ skill 主动碰这些就出事，所以直接不做，让用户自己决定：
 1. **不要用** `reset --hard` 或 `checkout -- .`（见"安全护栏"）
 2. 优先 `git revert <last-commit>` 生成反向 commit
 3. 或者先 `git stash` 暂存当前修改
-4. 用人话告诉用户："我把刚才那段撤掉了，回到上一个保存点"
+4. 用清楚的话告诉用户："我把刚才那段撤掉了，回到上一个保存点"
 
 ### 用户说"同步一下" / "保存一下" / "推上去"
 
-直接按"自动 commit + push"流程：保存 + 推送 + 用人话报告。
+直接按"自动 commit + push"流程：保存 + 推送 + 用清楚的话报告。
 
 ### Hook 失败了
 
@@ -394,7 +400,7 @@ skill 主动碰这些就出事，所以直接不做，让用户自己决定：
 
 ## 配套文件
 
-- `references/translation.md` — Git 操作 → 人话完整词表（来源：[giteveryday](https://git-scm.com/docs/giteveryday)）
+- `references/translation.md` — Git 操作 → 用户友好表达完整词表（来源：[giteveryday](https://git-scm.com/docs/giteveryday)）
 - `references/commit-style.md` — Conventional Commits 1.0.0 + 真实范例
 - `references/worktree-flow.md` — worktree 生命周期 + 命名 + 完成后流程
 - `references/hook-recovery.md` — pre-commit hook 失败的标准恢复
@@ -410,7 +416,7 @@ skill 主动碰这些就出事，所以直接不做，让用户自己决定：
 - [ ] commit message 符合 Conventional Commits
 - [ ] commit body 末尾有 Co-Authored-By trailer（如适用）
 - [ ] commit 体积 ≤ 100 行；> 1000 行已拆
-- [ ] 用户面用人话报告，没漏出 Git 术语
+- [ ] 用户面用清楚的话报告，没漏出 Git 术语
 
 每次开 worktree 前自检：
 
@@ -437,4 +443,4 @@ skill 主动碰这些就出事，所以直接不做，让用户自己决定：
 
 - [netresearch/git-workflow-skill](https://github.com/netresearch/git-workflow-skill) — 社区 git workflow skill
 - [addyosmani/agent-skills 的 git-workflow-and-versioning](https://github.com/addyosmani/agent-skills) — 参考手册类
-- easy-git-zh 差异：**行动者**而非参考手册 + 人话翻译层 + `.gitignore` 自动管理 + worktree 全流程托管
+- easy-git-zh 差异：**行动者**而非参考手册 + 自然语言交互层 + `.gitignore` 自动管理 + worktree 全流程托管

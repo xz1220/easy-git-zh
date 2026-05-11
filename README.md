@@ -2,7 +2,7 @@
 
 <h1 align="center">easy-git-zh</h1>
 <p align="center">让 AI Agent 替你搞定 Git — Agent Skills 标准 Skill</p>
-<p align="center">自动 commit + push · .gitignore 自动管理 · Worktree 全流程 · 人话翻译 · 安全护栏</p>
+<p align="center">自动 commit + push · .gitignore 自动管理 · Worktree 全流程 · 自然语言交互 · 安全护栏</p>
 
 ---
 
@@ -13,7 +13,7 @@
 - **Agent 一通改了 20 个文件，想回到 10 分钟前 — 回不去。** 没人替你存过节点，靠记忆手动撤是不现实的。AI 写得越快，没有版本管理的代价越大。
 - **想用 Git 兜底？** staging / branch / merge / rebase / reset 软硬混合三种模式…… 教程看到第三集还卡在第一个概念里：「我只是想存个进度啊。」
 
-easy-git-zh 在你和 Git 之间架一层 —— 你只管说人话，Git 透明。
+easy-git-zh 在你和 Git 之间架一层 —— 你只管说明需求，Git 自动处理。
 
 ## 功能
 
@@ -22,7 +22,7 @@ easy-git-zh 在你和 Git 之间架一层 —— 你只管说人话，Git 透明
 | 自动 commit + push | 一段工作完成 | 按语义拆原子 commit，写 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) 风格 message，同步到远端 |
 | `.gitignore` 自动管理 | 仓库缺 `.gitignore` / 命中脏文件 | 建 / 补 `.gitignore`，拦掉依赖目录 / 构建产物 / 密钥 / IDE 配置 |
 | Worktree 管理 | 用户说"加个新功能 …" | 自动开 worktree + 新分支；做完问 (a) 合并清理 (b) 提 PR (c) 暂留 |
-| 人话翻译 | 任何 git 行为 | "保存了一段进度" / "另起一条线做" / "回到 10 分钟前那个保存点"，不堆 git 术语 |
+| 自然语言交互 | 任何 git 行为 | "保存了一段进度" / "另起一条线做" / "回到 10 分钟前那个保存点"，不堆 git 术语 |
 | 安全护栏 | 危险动作触发 | `force push` 到 main / `reset --hard` / 密钥入库 / `git add -A` 等拦下来问 |
 
 ## 技术栈
@@ -34,13 +34,37 @@ easy-git-zh 在你和 Git 之间架一层 —— 你只管说人话，Git 透明
 
 ## 快速开始
 
+按你使用的 Agent 入口，选一种安装方式：
+
+### Claude Code
+
 ```bash
-# Claude Code 中：
 /plugin marketplace add xz1220/easy-git-zh
 /plugin install easy-git-zh
 ```
 
-其他兼容 Agent 按各自的 skill 安装机制，详见 [PRD 安装章节](docs/prd.md#安装)。装完之后什么都不用做，AI Agent 会自己在合适时机调用。
+### 本地 Skill 目录
+
+适合 Codex、Cursor、Gemini CLI、Goose、Amp、TRAE 等支持 Agent Skills 的工具。把仓库放进对应工具的 skills 目录即可：
+
+```bash
+git clone https://github.com/xz1220/easy-git-zh.git <your-agent-skills-dir>/easy-git-zh
+```
+
+### npx 安装器
+
+如果你的环境使用第三方 skills 安装器：
+
+```bash
+npx skills install xz1220/easy-git-zh
+```
+
+### Claude.ai / Claude API
+
+- Claude.ai：在 Skills 界面上传或注册这个 skill。
+- Claude API：按 Skills API 的注册流程接入 `SKILL.md`。
+
+装完之后不用额外配置。AI Agent 会在合适时机自动调用 easy-git-zh。
 
 ## 实际用起来是什么样
 

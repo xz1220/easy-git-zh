@@ -14,7 +14,7 @@ Git 是软件工程通用基础设施，但它的概念非常技术化：staging
 - 但学 Git 的成本远大于他们想付出的成本
 - 让 Agent 一步步教自己用 Git，每个对话都要重复「commit 一下 push 一下」也很啰嗦
 
-easy-git-zh 在用户与 Git 之间架一层 —— 用户跟 Agent 说人话，Agent 在合适时机自动调用 Git 能力，用人话回报结果。
+easy-git-zh 在用户与 Git 之间架一层 —— 用户用日常表达描述目标，Agent 在合适时机自动调用 Git 能力，并用清楚的话回报结果。
 
 ### 目标用户
 
@@ -35,7 +35,7 @@ easy-git-zh 在用户与 Git 之间架一层 —— 用户跟 Agent 说人话，
 2. **仓库初始化与 `.gitignore` 自动管理** —— 非 git 目录主动 `git init`；维护忽略列表，常见不该提交的文件（依赖目录、构建产物、密钥）默认拦掉
 3. **Commit message 标准化** —— Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) 公开规范，不让用户操心格式
 4. **Worktree 管理**（复杂项目）—— 新 feature 自动开 worktree + 新分支；做完问用户怎么合并
-5. **人话翻译层** —— 用户面不出现任何 Git 术语
+5. **自然语言交互层** —— 用户面尽量不暴露 Git 术语
 6. **安全护栏** —— 危险操作（force push、reset --hard、commit secret 等）永不主动做
 
 ### 安装
@@ -151,9 +151,9 @@ Subject 规则（业界标准）：
 - (b) 提 PR 让用户 review 再合（远端是 GitHub 时可用）
 - (c) 暂时保留 worktree
 
-### 人话翻译层
+### 自然语言交互层
 
-Agent 跟用户讲的话**完全不出现 Git 术语**。翻译词表来源 = [Git 官方 `giteveryday`](https://git-scm.com/docs/giteveryday) 的常用命令 + 业界公认的用户友好表述。完整词表在 `references/translation.md`，主要条目：
+Agent 跟用户讲的话**优先使用清楚的日常表达**，避免把 Git 术语直接抛给用户。翻译词表来源 = [Git 官方 `giteveryday`](https://git-scm.com/docs/giteveryday) 的常用命令 + 业界公认的用户友好表述。完整词表在 `references/translation.md`，主要条目：
 
 | Git 操作 | 对用户说什么 |
 |---|---|
@@ -233,7 +233,7 @@ easy-git-zh/
 
 - **[netresearch/git-workflow-skill](https://github.com/netresearch/git-workflow-skill)** —— 社区 git workflow skill，含分支策略 / commit conventions / PR workflow / CI-CD 集成
 - **[huggingface/upskill 的 git-commit-messages](https://github.com/huggingface/upskill)** —— 自然语言转 Conventional Commits
-- **[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)** —— production-grade 工程 skill 集，含 `git-workflow-and-versioning`（已分析，easy-git-zh 跟它的差异化是「行动者 vs 参考手册 + 人话翻译层 + .gitignore 自动管理 + worktree 全流程托管」）
+- **[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)** —— production-grade 工程 skill 集，含 `git-workflow-and-versioning`（已分析，easy-git-zh 跟它的差异化是「行动者 vs 参考手册 + 自然语言交互层 + .gitignore 自动管理 + worktree 全流程托管」）
 - **[davila7/claude-code-templates](https://github.com/davila7/claude-code-templates)** —— 含 git-commit-helper 模板
 
 ### 工程实践与调研
