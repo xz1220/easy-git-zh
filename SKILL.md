@@ -1,6 +1,9 @@
 ---
 name: easy-git-zh
-description: ALWAYS use in any git repository. At the start and end of each turn, check for unsaved changes; after file edits, save and sync meaningful progress in plain language. Manage .gitignore, open worktrees for new features, and block dangerous operations.
+description: ALWAYS use in any git repository. Before acting, read this SKILL.md; do not rely only on the summary. At the start and end of each turn, check for unsaved changes; after file edits, save and sync meaningful progress in plain language.
+metadata:
+  trigger: Any work inside a git repository, including code, docs, research, config, and project maintenance.
+  first_step: Read this SKILL.md before every use; the summary is not enough to follow the workflow safely.
 ---
 
 # easy-git-zh
@@ -11,9 +14,10 @@ description: ALWAYS use in any git repository. At the start and end of each turn
 
 **触发优先级：高。** 只要当前工作目录在 git 仓库内，就默认使用本 skill；不要等用户说"保存"、"提交"或"同步"才触发。每轮对话都按这个节奏：
 
-1. 开始工作前，快速看一眼有没有没保存的修改，避免踩到用户已有工作。
-2. 完成任何文件编辑、测试修复、文档整理、配置变更后，判断是否形成一个值得保存的节点。
-3. 形成保存节点时，按本 skill 的流程保存并同步；没有可保存内容时，不需要向用户汇报 Git 状态。
+1. 先读取本 `SKILL.md`，不要只靠 skill 列表里的摘要执行。
+2. 开始工作前，快速看一眼有没有没保存的修改，避免踩到用户已有工作。
+3. 完成任何文件编辑、测试修复、文档整理、配置变更后，判断是否形成一个值得保存的节点。
+4. 形成保存节点时，按本 skill 的流程保存并同步；没有可保存内容时，不需要向用户汇报 Git 状态。
 
 任何在 git 仓库里干活的时刻都适用：
 
