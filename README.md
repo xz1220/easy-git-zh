@@ -1,12 +1,10 @@
 <!-- TODO: 加 docs/banner.png -->
 
-<h1 align="center">easy-git</h1>
+<h1 align="center">easy-git-zh</h1>
 <p align="center">让 AI Agent 替你搞定 Git — Agent Skills 标准 Skill</p>
 <p align="center">自动 commit + push · .gitignore 自动管理 · Worktree 全流程 · 人话翻译 · 安全护栏</p>
 
 ---
-
-> **Status**：立项中（2026-05）／ PRD 已稳定 ／ SKILL.md 与 references 实现中 ／ 还不能直接安装。进展见 [`docs/prd.md`](docs/prd.md)。
 
 ## 它解决什么
 
@@ -15,7 +13,7 @@
 - **Agent 一通改了 20 个文件，想回到 10 分钟前 — 回不去。** 没人替你存过节点，靠记忆手动撤是不现实的。AI 写得越快，没有版本管理的代价越大。
 - **想用 Git 兜底？** staging / branch / merge / rebase / reset 软硬混合三种模式…… 教程看到第三集还卡在第一个概念里：「我只是想存个进度啊。」
 
-easy-git 在你和 Git 之间架一层 —— 你只管说人话，Git 透明。
+easy-git-zh 在你和 Git 之间架一层 —— 你只管说人话，Git 透明。
 
 ## 功能
 
@@ -38,8 +36,8 @@ easy-git 在你和 Git 之间架一层 —— 你只管说人话，Git 透明。
 
 ```bash
 # Claude Code 中：
-/plugin marketplace add xz1220/easy-git
-/plugin install easy-git
+/plugin marketplace add xz1220/easy-git-zh
+/plugin install easy-git-zh
 ```
 
 其他兼容 Agent 按各自的 skill 安装机制，详见 [PRD 安装章节](docs/prd.md#安装)。装完之后什么都不用做，AI Agent 会自己在合适时机调用。
@@ -48,7 +46,7 @@ easy-git 在你和 Git 之间架一层 —— 你只管说人话，Git 透明。
 
 ### 场景一：Agent 改坏了，想回到上一个完好的版本
 
-**没装 easy-git**：
+**没装 easy-git-zh**：
 
 ```
 你：帮我把搜索功能优化一下
@@ -57,7 +55,7 @@ Agent：好，改了 12 个文件……
 Agent：抱歉我没存过保存点，需要你逐个文件回想……
 ```
 
-**装了 easy-git**：
+**装了 easy-git-zh**：
 
 ```
 你：帮我把搜索功能优化一下
@@ -68,7 +66,7 @@ Agent：好，已经回退到刚才那个保存点了。
 
 ### 场景二：加个新功能不敢动主分支，但又不会 worktree
 
-**没装 easy-git**：
+**没装 easy-git-zh**：
 
 ```
 你：帮我加一个用户登录功能
@@ -77,7 +75,7 @@ Agent：（直接在当前分支改）改了 30 个文件
 Agent：抱歉我现在 reset 一下重来……
 ```
 
-**装了 easy-git**：
+**装了 easy-git-zh**：
 
 ```
 你：帮我加一个用户登录功能
@@ -89,7 +87,7 @@ Agent：这个改动比较大，我另起一条线 feat-user-login 做，
 ## 仓库结构
 
 ```
-easy-git/
+easy-git-zh/
 ├── SKILL.md            # 主 skill 文件（v0 待写，按 Agent Skills 规范）
 ├── references/
 │   ├── translation.md  # 翻译词表（来自 Git 官方 giteveryday）

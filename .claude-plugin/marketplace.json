@@ -1,5 +1,5 @@
 {
-  "name": "easy-git",
+  "name": "easy-git-zh",
   "owner": {
     "name": "xz1220"
   },
@@ -8,10 +8,10 @@
   },
   "plugins": [
     {
-      "name": "easy-git",
+      "name": "easy-git-zh",
       "source": {
         "source": "github",
-        "repo": "xz1220/easy-git"
+        "repo": "xz1220/easy-git-zh"
       },
       "description": "Auto-commits and pushes save points as work completes, manages .gitignore, opens worktrees for new features, translates Git output into plain language, and blocks dangerous operations."
     }

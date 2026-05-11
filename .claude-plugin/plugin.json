@@ -1,12 +1,12 @@
 {
-  "name": "easy-git",
+  "name": "easy-git-zh",
   "description": "Git complexity abstracted away — make AI Agents handle git in plain language. Auto-saves progress, manages .gitignore, opens worktrees, blocks dangerous operations.",
   "version": "0.1.0",
   "author": {
     "name": "xz1220"
   },
-  "homepage": "https://github.com/xz1220/easy-git",
-  "repository": "https://github.com/xz1220/easy-git",
+  "homepage": "https://github.com/xz1220/easy-git-zh",
+  "repository": "https://github.com/xz1220/easy-git-zh",
   "license": "MIT",
   "skills": "./"
 }

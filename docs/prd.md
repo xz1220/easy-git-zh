@@ -1,4 +1,4 @@
-# easy-git PRD
+# easy-git-zh PRD
 
 ## 1. 我们要做什么
 
@@ -14,7 +14,7 @@ Git 是软件工程通用基础设施，但它的概念非常技术化：staging
 - 但学 Git 的成本远大于他们想付出的成本
 - 让 Agent 一步步教自己用 Git，每个对话都要重复「commit 一下 push 一下」也很啰嗦
 
-easy-git 在用户与 Git 之间架一层 —— 用户跟 Agent 说人话，Agent 在合适时机自动调用 Git 能力，用人话回报结果。
+easy-git-zh 在用户与 Git 之间架一层 —— 用户跟 Agent 说人话，Agent 在合适时机自动调用 Git 能力，用人话回报结果。
 
 ### 目标用户
 
@@ -25,7 +25,7 @@ easy-git 在用户与 Git 之间架一层 —— 用户跟 Agent 说人话，Age
 - 做创作的（写作、博客、设计稿）
 - 用 Agent 管个人项目的（任何不想被 Git 绊倒的人）
 
-只要你在用 Agent，且想让自己的工作有版本管理兜底，easy-git 就该让这件事对你**透明**。
+只要你在用 Agent，且想让自己的工作有版本管理兜底，easy-git-zh 就该让这件事对你**透明**。
 
 ## 2. 功能、安装、怎么用
 
@@ -40,23 +40,23 @@ easy-git 在用户与 Git 之间架一层 —— 用户跟 Agent 说人话，Age
 
 ### 安装
 
-easy-git 是符合 [Agent Skills 开放标准](https://agentskills.io/specification) 的 skill，跟 MCP 无关。32+ AI Agent 工具（Claude Code、Codex、Cursor、GitHub Copilot、Gemini CLI、Junie、Goose、Amp、TRAE 等）都支持这个标准，**装一次多个 Agent 都能用**。
+easy-git-zh 是符合 [Agent Skills 开放标准](https://agentskills.io/specification) 的 skill，跟 MCP 无关。32+ AI Agent 工具（Claude Code、Codex、Cursor、GitHub Copilot、Gemini CLI、Junie、Goose、Amp、TRAE 等）都支持这个标准，**装一次多个 Agent 都能用**。
 
 **主推渠道**（Agent Skills 官方）：
 
-- Claude Code：`/plugin marketplace add xz1220/easy-git` + `/plugin install easy-git`
+- Claude Code：`/plugin marketplace add xz1220/easy-git-zh` + `/plugin install easy-git-zh`
 - Claude.ai：UI 上传
 - Claude API：Skills API 注册
 - 其他兼容 Agent：各自的 skill 安装机制
 
 **辅助渠道**：
 
-- 第三方 npx 安装器（如 `npx skills install xz1220/easy-git`，对偏好 npx 的用户）
+- 第三方 npx 安装器（如 `npx skills install xz1220/easy-git-zh`，对偏好 npx 的用户）
 - 直接 `git clone` 到 Agent 的本地 skill 目录
 
 ### 用户怎么用
 
-**短答**：装完不用做任何事。easy-git 装好后，Agent 在跟用户对话的任何时机自己判断要不要调用 Git，举例：
+**短答**：装完不用做任何事。easy-git-zh 装好后，Agent 在跟用户对话的任何时机自己判断要不要调用 Git，举例：
 
 - 你写完一段文档 → Agent 替你保存并同步到 GitHub，回报 "我把这段保存了并同步到 GitHub 了"
 - 你说「加一个新功能 …」→ Agent 替你另起一条线工作，回报 "我另起一条线 `feat-xxx` 在 `<目录>` 做这件事"
@@ -201,9 +201,9 @@ Agent 跟用户讲的话**完全不出现 Git 术语**。翻译词表来源 = [G
 ### 仓库结构（符合 Agent Skills 标准）
 
 ```
-easy-git/
+easy-git-zh/
 ├── SKILL.md            # 主 skill 文件（v0 待写）
-│                         frontmatter 含 name: easy-git, description: ...
+│                         frontmatter 含 name: easy-git-zh, description: ...
 ├── references/
 │   ├── translation.md  # 翻译词表完整版（来自 giteveryday）
 │   ├── commit-style.md # Conventional Commits 规范 + 公开范例
@@ -233,7 +233,7 @@ easy-git/
 
 - **[netresearch/git-workflow-skill](https://github.com/netresearch/git-workflow-skill)** —— 社区 git workflow skill，含分支策略 / commit conventions / PR workflow / CI-CD 集成
 - **[huggingface/upskill 的 git-commit-messages](https://github.com/huggingface/upskill)** —— 自然语言转 Conventional Commits
-- **[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)** —— production-grade 工程 skill 集，含 `git-workflow-and-versioning`（已分析，easy-git 跟它的差异化是「行动者 vs 参考手册 + 人话翻译层 + .gitignore 自动管理 + worktree 全流程托管」）
+- **[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)** —— production-grade 工程 skill 集，含 `git-workflow-and-versioning`（已分析，easy-git-zh 跟它的差异化是「行动者 vs 参考手册 + 人话翻译层 + .gitignore 自动管理 + worktree 全流程托管」）
 - **[davila7/claude-code-templates](https://github.com/davila7/claude-code-templates)** —— 含 git-commit-helper 模板
 
 ### 工程实践与调研
@@ -277,4 +277,4 @@ easy-git/
 - [ ] 完整 `references/hook-recovery.md`（pre-commit hook 失败标准恢复）
 - [ ] README 重写：以 User Story 风格（参考小红书 / 即刻爆款笔记结构）+ 痛点钩子（Git 学习成本太高、用 Agent 时反复打字提醒）讲清楚「装了它之后你的世界变成什么样」
 - [ ] 测试 fixture：搭一个空 sandbox 仓库 + 一组 dry-run 命令，验证 skill 在各类典型场景的行为
-- [ ] 详细分析 netresearch/git-workflow-skill 等同类 skill 的覆盖范围，确保 easy-git 差异化清晰、必要时直接 vendor 部分内容
+- [ ] 详细分析 netresearch/git-workflow-skill 等同类 skill 的覆盖范围，确保 easy-git-zh 差异化清晰、必要时直接 vendor 部分内容

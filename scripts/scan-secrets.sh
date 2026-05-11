@@ -11,7 +11,7 @@
 #   2  invocation error
 #
 # This script is conservative: false positives are preferred over false negatives.
-# Caller (easy-git skill) decides what to do — never auto-commit on exit 1.
+# Caller (easy-git-zh skill) decides what to do — never auto-commit on exit 1.
 
 set -euo pipefail
 
@@ -172,6 +172,6 @@ fi
 
 err ""
 err "❌ One or more potential secrets detected."
-err "   The easy-git skill will pause and ask the user before committing."
+err "   The easy-git-zh skill will pause and ask the user before committing."
 err "   If false positive, the user can confirm and proceed."
 exit 1

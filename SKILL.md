@@ -1,9 +1,9 @@
 ---
-name: easy-git
+name: easy-git-zh
 description: Handles Git operations in plain language so the user never has to learn Git. Auto-commits and pushes save points as work completes, manages .gitignore, opens worktrees for new features, translates Git output into everyday language, and blocks dangerous operations (force push, reset --hard, secret commits, git add -A). Use whenever working inside any git repository — non-developers writing docs, designers, researchers, and developers alike.
 ---
 
-# easy-git
+# easy-git-zh
 
 让 Agent 替用户搞定 Git，用户只管说人话。
 
@@ -437,4 +437,4 @@ skill 主动碰这些就出事，所以直接不做，让用户自己决定：
 
 - [netresearch/git-workflow-skill](https://github.com/netresearch/git-workflow-skill) — 社区 git workflow skill
 - [addyosmani/agent-skills 的 git-workflow-and-versioning](https://github.com/addyosmani/agent-skills) — 参考手册类
-- easy-git 差异：**行动者**而非参考手册 + 人话翻译层 + `.gitignore` 自动管理 + worktree 全流程托管
+- easy-git-zh 差异：**行动者**而非参考手册 + 人话翻译层 + `.gitignore` 自动管理 + worktree 全流程托管

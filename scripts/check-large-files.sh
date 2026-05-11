@@ -123,7 +123,7 @@ fi
 
 err ""
 err "❌ Large or binary file(s) detected."
-err "   The easy-git skill will pause and ask the user before committing."
+err "   The easy-git-zh skill will pause and ask the user before committing."
 err "   Suggestions:"
 err "   - Move large assets out of git (use git-lfs, S3, or external storage)"
 err "   - Add the file to .gitignore if it's a build artifact"
