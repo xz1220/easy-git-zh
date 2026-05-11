@@ -1,6 +1,6 @@
 {
   "name": "easy-git-zh",
-  "description": "Git complexity abstracted away — make AI Agents handle git in plain language. Auto-saves progress, manages .gitignore, opens worktrees, blocks dangerous operations.",
+  "description": "Always use in any git repository — make AI Agents auto-save and sync meaningful progress in plain language. Manages .gitignore, opens worktrees, and blocks dangerous operations.",
   "version": "0.1.0",
   "author": {
     "name": "xz1220"

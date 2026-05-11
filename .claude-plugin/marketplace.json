@@ -13,7 +13,7 @@
         "source": "github",
         "repo": "xz1220/easy-git-zh"
       },
-      "description": "Auto-commits and pushes save points as work completes, manages .gitignore, opens worktrees for new features, translates Git output into plain language, and blocks dangerous operations."
+      "description": "Always use in any git repository. Auto-saves and syncs meaningful progress as work completes, manages .gitignore, opens worktrees for new features, translates Git output into plain language, and blocks dangerous operations."
     }
   ]
 }
